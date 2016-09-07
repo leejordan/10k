@@ -45,8 +45,8 @@ function loadThumbnails() {
     var listItems = document.querySelectorAll('[data-id]');
 
     for (var i=0, item; item = listItems[i]; i++) {
-        if (! item.getAttribute("style")) {
-            item.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + item.dataset.id + '/mqdefault.jpg)';
+        if (! item.getAttribute('style')) {
+            item.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + item.getAttribute('data-id') + '/mqdefault.jpg)';
         }
     }
 }
@@ -177,7 +177,10 @@ function bindHoverEvent() {
 }
 
 function deselectFocus() {
-    document.activeElement.blur();
+    // with a little catch for an ie9 where blurring document switches window focus
+    if(document.activeElement !== document.body) {
+        document.activeElement.blur();
+    }
 }
 
 function bindBlurEvent() {
