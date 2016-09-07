@@ -6,6 +6,7 @@ function init() {
     loadThumbnails();
     bindCloseEvents();
     bindKeyboardControls();
+    bindHoverEvent();
     bindBlurEvent();
     loadYoutubeApi();
     restrictFocusToModal();
@@ -74,6 +75,7 @@ function loadMore(index, limit) {
     }
     fromIndex = fromIndex + limit;
     bindBlurEvent();
+    bindHoverEvent();
     loadThumbnails();
 }
 
@@ -165,6 +167,19 @@ function bindCloseEvents() {
     }
 }
 
+function bindHoverEvent() {
+    // remove focus on hover - mouse wins
+    var listItems = document.querySelectorAll('[data-id]');
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].removeEventListener('mouseover', deselectFocus);
+        listItems[i].addEventListener('mouseover', deselectFocus, false);
+    }
+}
+
+function deselectFocus() {
+    document.activeElement.blur();
+}
+
 function bindBlurEvent() {
     var listItems = document.querySelectorAll('[data-id]');
     var thresholdThumbnail = listItems[listItems.length - 4];
@@ -174,7 +189,6 @@ function bindBlurEvent() {
     for (var i = 0; i < listItems.length; i++) {
         listItems[i].removeEventListener('blur', loadMore, false);
     }
-
     thresholdThumbnail.addEventListener('blur', loadMore, false);
 }
 
@@ -184,7 +198,6 @@ function bindKeyboardControls() {
         if (e.keyCode == 27) {
             closePlayer(e);
         }
-
     });
 }
 
