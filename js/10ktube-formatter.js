@@ -1,3 +1,6 @@
+// formats the results of a youtube data api request into a more manageable format
+// example request: https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=YOUR_API_KEY
+
 function getFile(file) {
     var request = new XMLHttpRequest();
     request.open('GET', file, false);
@@ -22,7 +25,6 @@ for (var i = 0; i < data.items.length; i++){
 
     newObj.id = obj.id;
     newObj.title = obj.snippet.title;
-    newObj.description = truncate.apply(obj.snippet.description, [100, true]);
 
     formattedData[i] = newObj;
 }
