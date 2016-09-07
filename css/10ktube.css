@@ -79,11 +79,12 @@ footer {
 .player-wrap {
     position: fixed;
     overflow: hidden;
+    height: 100%;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    padding-bottom: 2.1rem;
+    padding-bottom: 4.2rem;
     background-color: white;
     opacity: 0;
     backface-visibility: hidden;
