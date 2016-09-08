@@ -58,9 +58,8 @@ function footerIsInViewport() {
     return false;
 }
 
-function loadMore(limit) {
-    limit = typeof limit !== 'undefined' ? limit : 10;
-
+function loadMore() {
+    var limit = 10;
     for (var i=fromIndex, item; item = videoData[i]; i++) {
         if (i < fromIndex + limit && i < Object.keys(videoData).length) {
             appendListItem(item.id, item.title);

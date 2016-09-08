@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>10k tube</title>
+    <title>10k tube the current most popular videos on youtube in under 10k</title>
     <link rel="stylesheet" href="css/10ktube.css">
 </head>
 
 <body>
     <header>
-        <h1><img class="logo" src="images/10ktube-logo.svg" alt="10k tube logo"></h1>
+        <h1><img class="logo" src="images/10ktube-logo.svg" alt="10k tube"></h1>
         <h2>The current most popular videos on youtube</h2>
     </header>
 
@@ -17,6 +17,7 @@
 
         $httpHost = $_SERVER['HTTP_HOST'];
         $httpRequest = $_SERVER['REQUEST_URI'];
+        // $request = "broken";
         $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyAqC1qAEVYz-iTZbS1uPGLcI2Vrk3lHX2k";
         $requestOptions = array(
             'http'=>array(
@@ -26,6 +27,9 @@
         );
         $requestStream = stream_context_create($requestOptions);
         $rawJson = @file_get_contents($request, false, $requestStream);
+
+        // generates a local backup in case youtube api is down or limit is reached
+        // file_put_contents("data/php-generated-data.json", json_encode((object)$rawJson));
 
         // handle the possibility that the youtube api might reach it's limits or go down - fall back to local data
         if ($rawJson === FALSE) {
@@ -38,8 +42,10 @@
         $initialVideoMax = 10;
 
         $decodedJson = json_decode($rawJson);
+        $decodedJsonItems = isset($decodedJson->scalar) ? json_decode($decodedJson->scalar) : $decodedJson;
+
         $count = 0;
-        foreach($decodedJson->items as $item) {
+        foreach($decodedJsonItems->items as $item) {
             $count++;
             $formattedResultsForHtml->$count = [
                 'id' => $item->id,
@@ -50,7 +56,7 @@
             }
         }
         $count = -1;
-        foreach($decodedJson->items as $item) {
+        foreach($decodedJsonItems->items as $item) {
             $count++;
             if ($count < $initialVideoMax) { continue; }
             $index = $count - $initialVideoMax;
@@ -59,12 +65,6 @@
                 'title' => $item->snippet->title,
             ];
         }
-
-        // var_dump($formattedResultsForHtml);
-        // var_dump($formattedResultsForJson);
-
-        // generates a local backup in case youtube api is down or limit is reached
-        // file_put_contents("data/php-generated-data.json", json_encode($formattedResultsForJson));
 
         // output the initial 10 video thumbnails to page
         $initialVideoCount = 0;
@@ -75,9 +75,6 @@
             $initialVideoCount++;
         }
         echo '</ol>';
-
-        // output the json data blob
-        echo '<script>var videoData = ' . json_encode($formattedResultsForJson) . ';</script>'
     ?>
 
     </div>
@@ -96,6 +93,10 @@
         <p>This site was built for <a href="https://a-k-apart.com/">10k apart</a> - a compelling web experience that can be delivered in 10kB and works without JavaScript. Built by <a href="http://www.lendmeyourear.net/">Lee Jordan</a>.</p>
     </footer>
 
+    <?php
+        // output the json data blob
+        echo '<script>var videoData = ' . json_encode($formattedResultsForJson) . ';</script>'
+    ?>
     <script src="js/10ktube.js"></script>
 </body>
 </html>
