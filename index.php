@@ -17,11 +17,11 @@
 
         $httpHost = $_SERVER['HTTP_HOST'];
         $httpRequest = $_SERVER['REQUEST_URI'];
-        $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyAqC1qAEVYz-iTZbS1uPGLcI2Vrk3lHX2k";
+        $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyB8NNNdxEc1SLzOAxPGf3t8xxOAYfyUvSY";
         $requestOptions = array(
             'http'=>array(
                 'method'=>"GET",
-                'header'=>"Referer: http://" . $httpHost . $httpRequest
+                'header'=>"Referer: http://".$httpHost.$httpRequest."\r\n"
             )
         );
         $requestStream = stream_context_create($requestOptions);
@@ -33,7 +33,7 @@
         // handle the possibility that the youtube api might reach it's limits or go down - fall back to local data
         if ($rawJson === FALSE) {
             $rawJson = @file_get_contents("data/php-generated-data.json");
-            echo '<div class="error"><p>I had some problems contacting youtube for current video information and I am forced to use the last set of videos that I can remember. Sorry about that!</div>';
+            echo '<div class="error"><p>I had some problems contacting youtube for current video information so I am using the last set of videos that I can remember. Sorry about that!</div>';
         }
 
         $formattedResultsForHtml = new stdClass();
@@ -80,7 +80,7 @@
 
     <div class="player-wrap" id="player-container">
         <div class="player-wrap__toolbar">
-            <img class="logo logo--small" src="images/10ktube-logo.svg" alt="10k tube logo">
+            <img class="logo logo--small" src="images/10ktube-logo.svg" alt="10k tube logo" data-close>
             <button class="player-wrap__close" id="focused-element" data-close>&lsaquo; back to video list</button>
         </div>
         <div id="player"></div>
