@@ -11,7 +11,6 @@
     <header>
         <h1><img class="logo" src="images/10ktube-logo.svg" alt="10k tube logo"></h1>
         <h2>The current most popular videos on youtube</h2>
-        <p>This site was built for <a href="https://a-k-apart.com/">10k apart</a> - a compelling web experience that can be delivered in 10kB and works without JavaScript. Built by <a href="http://www.lendmeyourear.net/">Lee Jordan</a>.</p>
     </header>
 
     <?php
@@ -31,37 +30,30 @@
         $rawJson = @file_get_contents($request, false, $requestStream);
 
         if ($rawJson === FALSE) {
-            echo '<div class="error"><h2>I AM ERROR</h2><p>I had some problems contacting youtube for video information and I am now sulking. You can <a href="https://www.youtube.com/">go to the real youtube</a> if you want to but be careful - it can be addictive.</p></div>';
+            echo '<div class="error"><h2>Oh Dear</h2><p>I had some problems contacting youtube for video information and I am now sulking. I probably hit my limit for youtube API requests. You can <a href="https://www.youtube.com/">go to the real youtube</a> if you want to but be careful - it can be addictive.</p></div>';
             exit;
         }
 
         $decodedJson = json_decode($rawJson);
-        $formattedResults = [];
+        $formattedResults = new stdClass();
         $count = 0;
 
         foreach($decodedJson->items as $item) {
-            $formattedResults[$count] = [
+            $formattedResults->$count = [
                 'id' => $item->id,
                 'title' => $item->snippet->title,
             ];
             $count++;
         }
 
-        $formattedJson = json_encode($formattedResults, JSON_FORCE_OBJECT);
-        $jsonFile = fopen("data/php-generated-data.json", "w");
-        fwrite($jsonFile, $formattedJson);
-        $readJsonFile = file_get_contents("data/php-generated-data.json");
-        $decodeJsonFile = json_decode($readJsonFile);
-
         $initialVideoCount = 1;
-        echo '<div id="video-list" class="list">';
-        foreach($decodeJsonFile as $video) {
-            //var_dump($video);
-            echo '<a href="https://www.youtube.com/watch?v=' . $video->id . '" class="list__vid" data-id="' . $video->id . '" onclick="return openModal("' . $video->id . '")"><h3>' . $video->title . '</h3></a>';
+        echo '<ol id="video-list" class="list">';
+        foreach($formattedResults as $video) {
+            echo '<li class="list__vid"><a href="https://www.youtube.com/watch?v=' . $video['id'] . '" data-id="' . $video['id'] . '" onclick="return openModal(\'' . $video['id'] . '\')"><h3>' . $video['title'] . '</h3></a></li>';
             if ($initialVideoCount == 10) { break; }
             $initialVideoCount++;
         }
-        echo '</div>';
+        echo '</ol>';
     ?>
 
     </div>
@@ -75,8 +67,8 @@
     </div>
 
     <footer id="footer">
-        <h3>The end</h3>
-        <p>We've run out of videos to show you. You can <a href="https://www.youtube.com/">watch more videos on youtube</a> if you want to but be careful - it's addictive.</p>
+        <h3>That's all for now folks!</h3>
+        <p>You can <a href="https://www.youtube.com/">watch more videos on youtube</a> if you want to but be careful - it's addictive.</p>
         <p>This site was built for <a href="https://a-k-apart.com/">10k apart</a> - a compelling web experience that can be delivered in 10kB and works without JavaScript. Built by <a href="http://www.lendmeyourear.net/">Lee Jordan</a>.</p>
     </footer>
 

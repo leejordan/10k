@@ -36,21 +36,6 @@ header h2 {
     font-weight: normal;
 }
 
-header:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -2rem;
-    left: 50%;
-    margin-left: -2rem;
-    width: 0;
-    height: 0;
-    border: 2rem solid #e9e9e9;
-    border-left: 2rem solid white;
-    border-right: 2rem solid white;
-    border-bottom: none;
-}
-
 footer {
     padding: 4rem 2rem;
 }
@@ -114,13 +99,13 @@ footer {
 }
 
 .player-wrap.active {
-    z-index: 2;
+    z-index: 30;
     opacity: 1;
     transform: translateX(0);
 }
 
 .player-wrap__toolbar {
-    z-index: 3;
+    z-index: 40;
     display: block;
     position: absolute;
     top: auto;
@@ -153,8 +138,11 @@ footer {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
-    padding: 3rem 1rem;
+    margin: 0;
+    padding: 1rem;
     background-color: white;
+    list-style-type: none;
+    counter-reset: li;
 }
 
 
@@ -166,17 +154,36 @@ footer {
     width: 100%;
     min-width: 100%;
     min-height: 200px;
+}
+
+.list__vid:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    z-index: 20;
+    top: 1rem;
+    left: 1rem;
+    padding: .5rem 1rem;
+    font-size: 2rem;
+    color: white;
+    background-color: #e62117;
+}
+
+.list__vid a {
+    display: block;
+    height: 100%;
     border: 1rem solid white;
+    border-radius: 10px;
     background-color: #e9e9e9;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top;
     transform-origin: center center;
-    transition: transform 0.3s ease-in;
+    transition: border-color 0.2s ease-in;
     text-decoration: none;
 }
 
-.list__vid:after {
+.list__vid a:after {
     content: '';
     display: none;
     position: absolute;
@@ -198,17 +205,15 @@ footer {
     font-weight: normal;
 }
 
-.list__vid:hover,
-.list__vid:focus {
+.list__vid a:hover,
+.list__vid a:focus {
     outline: none;
-    border-radius: 10px;
     border-color: #e62117;
-    z-index: 1;
-    transform: scale(1.01);
+    z-index: 10;
 }
 
-.list__vid:hover:after,
-.list__vid:focus:after {
+.list__vid a:hover:after,
+.list__vid a:focus:after {
     display: block;
 }
 

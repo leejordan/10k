@@ -59,17 +59,16 @@ function footerIsInViewport() {
     return false;
 }
 
-function loadMore(index, limit) {
-    index = typeof index !== 'undefined' ? index : 10;
+function loadMore(limit) {
     limit = typeof limit !== 'undefined' ? limit : 10;
 
     for (var i=fromIndex, item; item = data[i]; i++) {
         if (i < fromIndex + limit && i < Object.keys(data).length) {
-            appendListItem(i, item.id, item.title);
+            appendListItem(item.id, item.title);
         } else {
             if (footerIsInViewport()) {
                 fromIndex = fromIndex + limit;
-                loadMore(i);
+                loadMore();
             }
         }
     }
@@ -79,23 +78,24 @@ function loadMore(index, limit) {
     loadThumbnails();
 }
 
-function appendListItem(index, id, title) {
+function appendListItem(id, title) {
     var parent = document.getElementById('video-list');
+    var listItem = document.createElement('li');
     var link = document.createElement('a');
     var heading = document.createElement('h3');
     var headingText = document.createTextNode(title);
 
     heading.appendChild(headingText);
 
+    listItem.setAttribute('class', 'list__vid');
+    parent.appendChild(listItem);
+
     link.setAttribute('href', 'https://www.youtube.com/watch?v=' + id);
-    link.setAttribute('class', 'list__vid');
-    link.setAttribute('data-index', index);
     link.setAttribute('data-id', id);
     link.setAttribute('onclick', 'return openModal("' + id + '")');
-
     link.appendChild(heading);
 
-    parent.appendChild(link);
+    listItem.appendChild(link);
 }
 
 function loadYoutubeApi() {
