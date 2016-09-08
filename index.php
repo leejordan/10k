@@ -17,7 +17,6 @@
 
         $httpHost = $_SERVER['HTTP_HOST'];
         $httpRequest = $_SERVER['REQUEST_URI'];
-        // $request = "broken";
         $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyAqC1qAEVYz-iTZbS1uPGLcI2Vrk3lHX2k";
         $requestOptions = array(
             'http'=>array(
