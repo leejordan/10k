@@ -31,8 +31,8 @@ header h1 {
 
 header h2 {
     display: inline-block;
-    vertical-align: middle;
-    margin: 1rem 0;
+    vertical-align: baseline;
+    margin: 1rem 0 0;
     font-size: 1.6rem;
     font-weight: normal;
 }

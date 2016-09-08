@@ -1,5 +1,4 @@
-var data = JSON.parse(getFile('./data/php-generated-data.json'));
-var fromIndex = 10;
+var fromIndex = 0;
 var currentVideoId;
 
 function init() {
@@ -62,8 +61,8 @@ function footerIsInViewport() {
 function loadMore(limit) {
     limit = typeof limit !== 'undefined' ? limit : 10;
 
-    for (var i=fromIndex, item; item = data[i]; i++) {
-        if (i < fromIndex + limit && i < Object.keys(data).length) {
+    for (var i=fromIndex, item; item = videoData[i]; i++) {
+        if (i < fromIndex + limit && i < Object.keys(videoData).length) {
             appendListItem(item.id, item.title);
         } else {
             if (footerIsInViewport()) {

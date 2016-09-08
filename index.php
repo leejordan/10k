@@ -26,43 +26,58 @@
         );
         $requestStream = stream_context_create($requestOptions);
         $rawJson = @file_get_contents($request, false, $requestStream);
-        $formattedResults = new stdClass();
-        $count = 0;
 
         // handle the possibility that the youtube api might reach it's limits or go down - fall back to local data
         if ($rawJson === FALSE) {
             $rawJson = @file_get_contents("data/php-generated-data.json");
-            $decodedJson = json_decode($rawJson);
-            foreach($decodedJson as $item) {
-                $formattedResults->$count = [
-                    'id' => $item->id,
-                    'title' => $item->title,
-                ];
-                $count++;
-            }
             echo '<div class="error"><p>I had some problems contacting youtube for current video information and I am forced to use the last set of videos that I can remember. Sorry about that!</div>';
-        } else {
-            $decodedJson = json_decode($rawJson);
-            foreach($decodedJson->items as $item) {
-                $formattedResults->$count = [
-                    'id' => $item->id,
-                    'title' => $item->snippet->title,
-                ];
-                $count++;
-            }
         }
 
-        // generates a local backup in case youtube api is down or limit is reached
-        // file_put_contents("data/php-generated-data.json", json_encode($formattedResults));
+        $formattedResultsForHtml = new stdClass();
+        $formattedResultsForJson = new stdClass();
+        $initialVideoMax = 10;
 
+        $decodedJson = json_decode($rawJson);
+        $count = 0;
+        foreach($decodedJson->items as $item) {
+            $count++;
+            $formattedResultsForHtml->$count = [
+                'id' => $item->id,
+                'title' => $item->snippet->title,
+            ];
+            if ($count == $initialVideoMax) {
+                break;
+            }
+        }
+        $count = -1;
+        foreach($decodedJson->items as $item) {
+            $count++;
+            if ($count < $initialVideoMax) { continue; }
+            $index = $count - $initialVideoMax;
+            $formattedResultsForJson->$index = [
+                'id' => $item->id,
+                'title' => $item->snippet->title,
+            ];
+        }
+
+        // var_dump($formattedResultsForHtml);
+        // var_dump($formattedResultsForJson);
+
+        // generates a local backup in case youtube api is down or limit is reached
+        // file_put_contents("data/php-generated-data.json", json_encode($formattedResultsForJson));
+
+        // output the initial 10 video thumbnails to page
+        $initialVideoCount = 0;
         echo '<ol id="video-list" class="list">';
-        $initialVideoCount = 1;
-        foreach($formattedResults as $video) {
+        foreach($formattedResultsForHtml as &$video) {
             echo '<li class="list__vid"><a href="https://www.youtube.com/watch?v=' . $video['id'] . '" data-id="' . $video['id'] . '" onclick="return openModal(\'' . $video['id'] . '\')"><h3>' . $video['title'] . '</h3></a></li>';
-            if ($initialVideoCount == 10) { break; }
+            if ($initialVideoCount == $initialVideoMax) { break; }
             $initialVideoCount++;
         }
         echo '</ol>';
+
+        // output the json data blob
+        echo '<script>var videoData = ' . json_encode($formattedResultsForJson) . ';</script>'
     ?>
 
     </div>
