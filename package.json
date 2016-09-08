@@ -1,0 +1,22 @@
+{
+  "name": "10k",
+  "version": "1.0.0",
+  "description": "10k tube - The current most popular videos on youtube in under 10k for the 10k apart competition",
+  "main": "index.php",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leejordan/10k.git"
+  },
+  "author": "Lee Jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leejordan/10k/issues"
+  },
+  "homepage": "https://github.com/leejordan/10k#readme",
+  "dependencies": {
+    "node-minify": "^1.3.9"
+  }
+}

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>10k tube the current most popular videos on youtube in under 10k</title>
-    <link rel="stylesheet" href="css/10ktube.css">
+    <link rel="stylesheet" href="css/10ktube.min.css">
 </head>
 
 <body>
@@ -97,6 +97,6 @@
         // output the json data blob
         echo '<script>var videoData = ' . json_encode($formattedResultsForJson) . ';</script>'
     ?>
-    <script src="js/10ktube.js"></script>
+    <script src="js/10ktube.min.js"></script>
 </body>
 </html>
