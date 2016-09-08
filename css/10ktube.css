@@ -76,6 +76,27 @@ footer {
     height: 3rem;
 }
 
+.error {
+    background-color: white;
+    padding: 1rem;
+}
+
+.error h2,
+.error p {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.error p {
+    margin-bottom: 4rem;
+}
+
+.error h2 {
+    margin-top: 4rem;
+}
+
 .player-wrap {
     position: fixed;
     overflow: hidden;

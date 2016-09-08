@@ -1,5 +1,5 @@
-var data = JSON.parse(getFile('./data/mostpopular.json'));
-var fromIndex = 0;
+var data = JSON.parse(getFile('./data/php-generated-data.json'));
+var fromIndex = 10;
 var currentVideoId;
 
 function init() {
@@ -60,7 +60,7 @@ function footerIsInViewport() {
 }
 
 function loadMore(index, limit) {
-    index = typeof index !== 'undefined' ? index : 0;
+    index = typeof index !== 'undefined' ? index : 10;
     limit = typeof limit !== 'undefined' ? limit : 10;
 
     for (var i=fromIndex, item; item = data[i]; i++) {
