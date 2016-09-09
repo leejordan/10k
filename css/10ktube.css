@@ -18,6 +18,18 @@ body.player-open {
     overflow: hidden;
 }
 
+a {
+    color: #e62117;
+}
+
+a:hover,
+a:focus {
+    outline: none;
+    background-color: #e62117;
+    color: white;
+    text-decoration: none;
+}
+
 header {
     position: relative;
     padding: 2rem;
