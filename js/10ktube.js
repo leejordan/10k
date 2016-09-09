@@ -188,7 +188,6 @@ function bindHoverEvent() {
 }
 
 function deselectFocus() {
-    console.log('trying to deselect focus');
     // with a little catch for an ie9 where blurring document switches window focus
     if(document.activeElement !== document.body) {
         document.activeElement.blur();
