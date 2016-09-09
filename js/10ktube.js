@@ -10,12 +10,12 @@ function init() {
     loadYoutubeApi();
     restrictFocusToModal();
 
-    if (footerIsInViewport()) {
+    if (lastListItemIsInViewport()) {
         loadMore();
     }
 
     window.onscroll = function() {
-        if (footerIsInViewport()) {
+        if (lastListItemIsInViewport()) {
             loadMore();
         }
     };
@@ -50,29 +50,42 @@ function loadThumbnails() {
     }
 }
 
-function footerIsInViewport() {
-    var footer = document.getElementById('footer');
-    if (isElementInViewport(footer)) {
+function lastListItemIsInViewport() {
+    var lastListItem = document.querySelector('.list__vid:last-of-type')
+    if (isElementInViewport(lastListItem)) {
         return true;
     }
     return false;
 }
 
 function loadMore() {
+    var limitReached = false;
     var limit = 10;
     for (var i=fromIndex, item; item = videoData[i]; i++) {
         if (i < fromIndex + limit && i < Object.keys(videoData).length) {
             appendListItem(item.id, item.title);
-        } else {
-            if (footerIsInViewport()) {
-                fromIndex = fromIndex + limit;
-                loadMore();
+        }
+        if (fromIndex === 30 && i === 39) {
+            var listItems = document.querySelectorAll('[data-id]');
+            var thresholdThumbnail = listItems[listItems.length - 4];
+            for (var i = 0; i < listItems.length; i++) {
+                listItems[i].removeEventListener('blur', loadMore, false);
             }
+            window.onscroll = function() { return true; };
+            limitReached = true;
+            break;
         }
     }
+    if (lastListItemIsInViewport() && !limitReached) {
+        fromIndex = fromIndex + limit;
+        loadMore.call();
+        return true;
+    }
+    if (!limitReached) {
+        bindBlurEvent();
+        bindHoverEvent();
+    }
     fromIndex = fromIndex + limit;
-    bindBlurEvent();
-    bindHoverEvent();
     loadThumbnails();
 }
 
