@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>10k tube the current most popular videos on youtube in under 10k</title>
+    <title>10k tube the most popular videos on youtube right now</title>
     <link rel="stylesheet" href="css/10ktube.min.css">
 </head>
 
 <body>
     <header>
         <h1><img class="logo" src="images/10ktube-logo.svg" alt="10k tube"></h1>
-        <h2>The current most popular videos on youtube</h2>
+        <h2>The most popular videos on youtube right now</h2>
     </header>
 
     <?php
