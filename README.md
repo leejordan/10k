@@ -24,3 +24,6 @@ I am not using any libraries, just my own CSS and JS.
 
 ## Potential improvements
 The JavaScript could definitely be refined. The main performance concern is that a lot happens at once when it loads more videos in. But it works fine in all of the browsers I tested and really the challenge is mostly about the creation of a compelling web experience under the 10k limit.
+
+## Demo
+(http://www.lendmeyourear.net/10k)[http://www.lendmeyourear.net/10k]
