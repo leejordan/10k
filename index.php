@@ -81,7 +81,7 @@
     <div class="player-wrap" id="player-container">
         <div class="player-wrap__toolbar">
             <img class="logo logo--small" src="images/10ktube-logo.svg" alt="10k tube logo" data-close>
-            <button class="player-wrap__close" id="focused-element" data-close>&lsaquo; back to video list</button>
+            <button class="player-wrap__close" id="focused-element" data-close><span class="sr-only">video loading</span>&lsaquo; back to video list</button>
         </div>
         <div id="player"></div>
     </div>
