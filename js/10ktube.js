@@ -42,7 +42,6 @@ function isElementInViewport(el) {
 
 function loadThumbnails() {
     var listItems = document.querySelectorAll('[data-id]');
-
     for (var i=0, item; item = listItems[i]; i++) {
         if (! item.getAttribute('style')) {
             item.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + item.getAttribute('data-id') + '/mqdefault.jpg)';
@@ -95,23 +94,18 @@ function appendListItem(id, title) {
     var link = document.createElement('a');
     var heading = document.createElement('h3');
     var headingText = document.createTextNode(title);
-
     heading.appendChild(headingText);
-
     listItem.setAttribute('class', 'list__vid');
     parent.appendChild(listItem);
-
     link.setAttribute('href', 'https://www.youtube.com/watch?v=' + id);
     link.setAttribute('data-id', id);
     link.setAttribute('onclick', 'return openModal("' + id + '")');
     link.appendChild(heading);
-
     listItem.appendChild(link);
 }
 
 function loadYoutubeApi() {
     var tag = document.createElement('script');
-
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -172,7 +166,6 @@ function closePlayer(e) {
 
 function bindCloseEvents() {
     var closeElements = document.querySelectorAll('[data-close]');
-
     for (var i = 0; i < closeElements.length; i++) {
         closeElements[i].addEventListener('click', closePlayer, false);
     }
@@ -188,7 +181,7 @@ function bindHoverEvent() {
 }
 
 function deselectFocus() {
-    // with a little catch for an ie9 where blurring document switches window focus
+    // with a little catch for an ie9 bug where blurring document switches window focus
     if(document.activeElement !== document.body) {
         document.activeElement.blur();
     }
@@ -199,7 +192,7 @@ function bindBlurEvent() {
     var thresholdThumbnail = listItems[listItems.length - 4];
 
     // detect when (nearly) the last thumbnail loses focus
-    // avoids need to detect tab key press and allows this to work with screen reader focus too
+    // avoids the need to detect tab key press specifically and allows this to work with screen reader focus too
     for (var i = 0; i < listItems.length; i++) {
         listItems[i].removeEventListener('blur', loadMore, false);
     }
