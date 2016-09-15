@@ -1,6 +1,8 @@
 # 10ktube
 Built for the [10k apart](https://a-k-apart.com) challenge. A compelling web experience that can be delivered in 10kB and works without JavaScript. By [Lee Jordan](http://www.lendmeyourear.net/).
 
+[Competition entry page](https://a-k-apart.com/gallery/10ktube)
+
 ## 10k size limit
 With gzip enabled and minifed CSS/JavaScript the initially loaded and usable page is 8.7kb.
 This could be reduced further by not using the two svgs but they are both optimised heavily via [svgomg](https://jakearchibald.github.io/svgomg/). After the initial page load, the youtube iframe api JavaScript is lazy loaded along with the first 10 video thumbnail images. I've chosen the smallest size which still gives a relatively good visual quality.
