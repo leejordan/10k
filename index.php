@@ -17,7 +17,7 @@
 
         $httpHost = $_SERVER['HTTP_HOST'];
         $httpRequest = $_SERVER['REQUEST_URI'];
-        $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyB8NNNdxEc1SLzOAxPGf3t8xxOAYfyUvSY";
+        $request = "https://www.googleapis.com/youtube/v3/videos/?chart=mostPopular&maxResults=50&part=id,snippet&key=AIzaSyCbC_LX7H46AxVlpNShSfcbMv8YKmON-g4";
         $requestOptions = array(
             'http'=>array(
                 'method'=>"GET",
